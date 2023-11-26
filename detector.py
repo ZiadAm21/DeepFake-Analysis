@@ -14,7 +14,7 @@ import scipy.io
 import time 
 import matplotlib.pyplot as plt 
 
-rootdir = '/content/gdrive/My Drive/DeepFakeDetective/'
+rootdir = 'YourPath/DeepFakeDetective/'
 image_name_video = []
 # Load the cascade
 face_cascade = cv2.CascadeClassifier(os.path.join(
@@ -24,7 +24,7 @@ for f in [f for f in os.listdir(os.path.join(rootdir, 'TestData/'))]:
     if "DS_Store" in f: 
         continue
     
-    carpeta= os.path.join(image_path, f)
+    carpeta= os.path.join(rootdir, 'TestData/', f)
     cap = cv2.VideoCapture(carpeta)
     frame_rate = cap.get(cv2.CAP_PROP_FPS)
     nFrames = cap.get(7)
@@ -170,7 +170,6 @@ def load_test_motion(carpeta):
             img = img.transpose((-1,0,1))
             X_test.append(img)
             images_names.append(imagenes)
-            # X_test = [tf.reshape(X_test[0], [36, 36, 3])]
     return X_test, images_names
 
 def load_test_attention(carpeta):
@@ -187,17 +186,15 @@ def load_test_attention(carpeta):
             img = img.transpose((-1,0,1))
             X_test.append(img)
             images_names.append(imagenes)
-            # X_test = [tf.reshape(X_test[0], [36, 36, 3])]
     return X_test, images_names
 
 np.set_printoptions(threshold=np.inf)
 data = []
 batch_size = 128
-model = load_model(os.path.join(rootdir, 'DeepFakesON-Phys_CelebDF_V2.h5')
-# print(model.summary())
-# input("Press Enter to continue...")
+model = load_model(os.path.join(rootdir, 'DeepFakesON-Phys_CelebDF_V2.h5'))
+print(model.summary())
+input("Press Enter to continue...")
 
-image_path = '/content/gdrive/My Drive/DeepFakeDetective'
 carpeta_deep= os.path.join(rootdir, "DeepFrames")
 carpeta_raw= os.path.join(rootdir, "RawFrames")
 
