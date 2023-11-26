@@ -14,27 +14,25 @@ import scipy.io
 import time 
 import matplotlib.pyplot as plt 
 
-image_path = '/content/gdrive/My Drive/DeepFakeDetective/TestData/'
+rootdir = '/content/gdrive/My Drive/DeepFakeDetective/'
 image_name_video = []
 # Load the cascade
-face_cascade = cv2.CascadeClassifier(
-    '/content/gdrive/My Drive/DeepFakeDetective/haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier(os.path.join(
+    rootdir, 'haarcascade_frontalface_default.xml'))
 
-for f in [f for f in os.listdir(image_path)]:
+for f in [f for f in os.listdir(os.path.join(rootdir, 'TestData/'))]:
     if "DS_Store" in f: 
         continue
-    # if not("_C.avi" in f): #OULU
-    #     continue
     
     carpeta= os.path.join(image_path, f)
     cap = cv2.VideoCapture(carpeta)
     frame_rate = cap.get(cv2.CAP_PROP_FPS)
     nFrames = cap.get(7)
     max_frames = int(nFrames)
-    ruta_parcial = os.path.join('/content/gdrive/My Drive/DeepFakeDetective/DeepFrames',f)
+    ruta_parcial = os.path.join(rootdir, 'DeepFrames',f)
     if not(os.path.exists(ruta_parcial)):
         os.mkdir(ruta_parcial);
-    ruta_parcial2 = os.path.join('/content/gdrive/My Drive/DeepFakeDetective/RawFrames',f)
+    ruta_parcial2 = os.path.join(rootdir, 'RawFrames',f)
     if not(os.path.exists(ruta_parcial2)):
         os.mkdir(ruta_parcial2);
     
@@ -195,13 +193,13 @@ def load_test_attention(carpeta):
 np.set_printoptions(threshold=np.inf)
 data = []
 batch_size = 128
-model = load_model('/content/gdrive/My Drive/DeepFakeDetective/DeepFakesON-Phys_CelebDF_V2.h5')
+model = load_model(os.path.join(rootdir, 'DeepFakesON-Phys_CelebDF_V2.h5')
 # print(model.summary())
 # input("Press Enter to continue...")
 
 image_path = '/content/gdrive/My Drive/DeepFakeDetective'
-carpeta_deep= os.path.join(image_path, "DeepFrames")
-carpeta_raw= os.path.join(image_path, "RawFrames")
+carpeta_deep= os.path.join(rootdir, "DeepFrames")
+carpeta_raw= os.path.join(rootdir, "RawFrames")
 
 test_data, images_names = load_test_motion(carpeta_deep)
 test_data2, images_names = load_test_attention(carpeta_raw)
